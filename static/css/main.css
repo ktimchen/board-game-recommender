@@ -4,6 +4,7 @@ body {
   color: #e5e5e5;
   
   margin: 0;
+  
 }
 
 ul {
@@ -116,6 +117,7 @@ ul {
     overflow: scroll;
     padding: 10px;
     color: #fff;
+    overflow-x: hidden;
 }
 
 .child {
@@ -185,6 +187,7 @@ ul {
     margin:10px;
     
     color: #646464;
+    background-color: #efefef;
 }
 
 #big_submit:hover {
