@@ -1,0 +1,203 @@
+<!DOCTYPE html> 
+<html>
+    
+    <head>
+        <title>Board Game Recommender</title>
+        
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')  }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></link>
+        <link href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+        <script src="//code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+        <script type="text/javascript">
+            
+            
+            
+$(function() {
+    $("#autocomplete").autocomplete({
+        source:function(request, response) {
+            $.getJSON("{{url_for('autocomplete')}}",{
+                q: request.term, // in flask, "q" will be the argument to look for using request.args
+            }, function(data) {
+                response(data.matching_results); // matching_results from jsonify // .slice(0, 20)
+            });
+        },
+        minLength: 1,
+        
+        select: function(event, ui) {
+            console.log(ui.item.value); // not in your question, but might help later
+            $("#autocomplete").val($('#autocomplete').val() + ui.item.value + ', ');
+            
+            
+            
+            
+          
+           
+            
+        }
+        
+       
+    });
+})
+    
+$(document).ready(function(){
+  
+  $("#autocomplete").click(function(){
+    $('#autocomplete').val('');
+  });   
+	
+  
+});
+            
+ 
+</script>
+
+
+</head>
+    
+    <body>
+        
+          
+        <div class = "hero-image">
+            <div class="about">
+                <a href="#about_modal">About</a>
+            </div>
+            
+            <div class= "hero-form">
+                <h class = "head_name"> Board Game Recommender </h>
+                <form action="{{ url_for('predict') }}" id = "big_form" method="POST">
+                 
+                 <input name="autocomplete" type="text" id = "autocomplete" class="form-control input-lg" placeholder="Start typing your game..."/>
+                 <button type="submit" id = "big_submit">Suggest!</button> 
+                                 
+                </form>
+                
+            </div>
+        
+        
+            
+        
+        </div>
+        
+        
+        
+    <div class="container">
+        
+     
+     {% for key, value in info %}
+        
+   
+        <div class = "hs_wrapper">
+            <div class = "hs_header">
+                <h2 class="hs__headline"> {{ key }}</h2>
+            </div>
+            <ul class = "hs">
+               
+                {% for i in value %}
+                
+                <li class = "hs_item">
+                    <a href = "#{{ "pop" ~ i["id"] }}">
+                   <div class = "hs_item_image_wrapper" style="background-image: url('{{i['image']}}');" loading="lazy">   
+                      <!-- <img class="hs__item__image" src="{{ i['image'] }}"  loading="lazy" >   -->
+                       <!-- <div class = "hs_item_image_wrapper" style="background-image: url('/static/dice_foot.png');" loading="lazy">  -->
+                        
+                    </div>
+                    </a>
+                    <div class = "hs_item_description">
+                        <span class="hs__item__title">{{ i['primary'] }}</span>
+                    </div>
+                </li>
+                {% endfor %}
+                
+            </ul>
+        </div>   
+    
+        
+     {% endfor %}
+       
+        
+    </div>
+        
+
+<div class="modal" id="modal">
+        
+    {% for key, value in info %}
+    {% for i in value %}
+        
+<div id="{{ "pop" ~ i["id"] }}" class="overlay">
+  <a class="cancel" href="#close"></a>   
+ 
+    <div  class="popup">
+        <div class="left">
+            <h2 class = "modal_head">{{ i['primary'] }}</h2>
+          <h style = "font-weight: bold;" >  {{ i['desc_1'] |safe }} </h>
+            <br>
+            <div class = "safe">
+            {{ i['desc_2'] |safe }}  
+             </div>
+         </div>
+        
+    <div class="right">
+         
+        
+    <img class = "bigim" src = "{{ i['image'] }}" loading="lazy">
+    
+
+  
+        
+    </div>
+        
+  
+
+  </div>
+        </div> 
+      
+      
+      
+    {% endfor %}
+    {% endfor %}
+       
+</div>              
+        
+   
+        
+<div class="about_modal" id="about_modal">  
+   
+  <div class = "about_modal_content"> 
+     <center><img src="/static/dice.png" style="max-width: 30px;" ></center>
+    <a href="#" title="Close" class="modal-close">Close</a>
+    <h3>What?</h3>
+    <div>A board game recommender system.</div>
+    
+    <h3>Why?</h3>
+    <div>To find better board games during the quarantine. </div> 
+      
+    <h3>How?</h3>
+    <div> Item-based collaborative filtering.  </div> 
+     
+    <div> I collected a data set of ~15mil ratings from 190,000 users for 10,500 games using web scraping of www.boardgamegeek.com API. </div> 
+       <div> A sparse user-game matrix was created based on that data. After taking care of the bias and using SVD to decrease the rank of the user-game matrix we computed the distances between games. Given a game, the system returns a 100 games, closest to the given one.   
+      </div> 
+     
+     
+    <h3>Tools?</h3>
+    <div>Python, scipy.sparse and scikit-learn libraries, Flask, some CSS and jQuery. </div> 
+     
+    <h3>Hire me!</h3>
+    <div>Made by: Kostya Timchenko </div> 
+    <div>ktimchen1@gmail.com </div> 
+     
+   
+   </div>
+
+</div>
+      
+        
+   
+  <center style="margin-top: 140px;"><p><img src="/static/dice_foot.png" style="max-width: 30px; vertical-align: middle;" ></p></center>      
+        
+    </body>
+    
+</html>
