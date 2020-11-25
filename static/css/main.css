@@ -100,6 +100,10 @@ ul {
   border-radius: 6px;
 }
 
+.hs_item_image_wrapper:hover {
+    box-shadow: 4px 4px 6px 1px rgb(196 196 196 / 22%);
+}
+
 
 .right {
     background-color: #00000099;
