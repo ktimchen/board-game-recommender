@@ -45,7 +45,7 @@ def predict():
         
         
     try:
-        sample = games_info.loc[games_info.primary == sample_name, "id"].iloc[0]
+        sample = games_info.loc[games_info.primary.str.lower() == sample_name.lower(), "id"].iloc[0]
     except:        
         dict_exception = { "This is not a game : try again!" : [{"id": "notagame", "image": "https://via.placeholder.com/200/?text=not_a_game.png", "primary": "Not a game", "desc_1": "not a game", "desc_2": "not a game" }] }
         return render_template("index.html", info =  dict_exception.items() )
@@ -98,13 +98,7 @@ def predict():
         
             
     
-    print("111111111111111111111111111111222222222222222")
     
-        
-    
-    #data = game_info[game_info.id.isin(games)][["id", "image", "primary"]]
-    
-    #data = data.to_dict(orient = "records")
     
     
     
