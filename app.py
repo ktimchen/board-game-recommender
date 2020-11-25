@@ -62,8 +62,14 @@ def predict():
     df_sample = games_info[games_info.id == int(sample)].reset_index()
     
     #categories and mechanics of the sample
-    cats = df_sample.boardgamecategory[0].strip("[]").replace("'","").split(", ")
-    mechs = df_sample.boardgamemechanic[0].strip("[]").replace("'","").split(", ")
+    try:
+        cats = df_sample.boardgamecategory[0].strip("[]").replace("'","").split(", ")
+    except:
+        cats = []
+    try:
+        mechs = df_sample.boardgamemechanic[0].strip("[]").replace("'","").split(", ")
+    except:
+        mechs = []
     
     for cat in cats:    
         x = cat
