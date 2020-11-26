@@ -1,3 +1,5 @@
+![Webp.net-resizeimage](https://user-images.githubusercontent.com/36734709/100307578-3b262700-2f74-11eb-9f93-c9699008f16b.jpg)
+
 ## Board Game Recommender <a href="http://www.findme.games">findme.games</a>
 
 #### Looking for your next board game?
