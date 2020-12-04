@@ -202,7 +202,12 @@ ul {
 .head_name {
  font-size: 60px;
  font-weight: 600;
- text-shadow: 0 1px 2px rgb(0 0 0 / 50%);
+}
+
+@media only screen and (min-width: 64em) {
+  .head_name {
+    text-shadow: 0 1px 2px rgb(0 0 0 / 50%);
+  }
 }
 
 #big_form {
